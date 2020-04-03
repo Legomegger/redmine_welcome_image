@@ -1,0 +1,7 @@
+# Kazakh strings go here for Rails i18n
+ru:
+  label_display_image: 'Показать изображение'
+  label_upload: 'Загрузить изображение'
+  label_hide: 'Скрыть изображение'
+  label_show: 'Показать изображение'
+  label_current_image: 'Текущее изображение: '

@@ -1,0 +1,6 @@
+<% if WelcomeImage.all.present? && WelcomeImage.last.image.present? && WelcomeImage.last.display_image %>
+<%= image_tag WelcomeImage.last.image, style: 'height:100%;width:100%' %>
+<% else %>
+    <%= nil %>
+<% end %>
+

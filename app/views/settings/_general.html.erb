@@ -1,0 +1,58 @@
+
+<%= form_tag({:action => 'edit'}) do %>
+
+    <hr class="box tabular settings">
+    <p><%= setting_text_field :app_title, :size => 30 %></p>
+
+    <p><%= setting_text_area :welcome_text, :cols => 60, :rows => 5, :class => 'wiki-edit' %></p>
+    <%= wikitoolbar_for 'settings_welcome_text' %>
+
+
+    <p><%= setting_text_field :per_page_options, :size => 20 %>
+    <em class="info"><%= l(:text_comma_separated) %></em></p>
+
+    <p><%= setting_text_field :search_results_per_page, :size => 6 %>
+
+    <p><%= setting_text_field :activity_days_default, :size => 6 %> <%= l(:label_day_plural) %></p>
+
+    <p><%= setting_text_field :host_name, :size => 60 %>
+    <em class="info"><%= l(:label_example) %>: <%= @guessed_host_and_path %></em></p>
+
+    <p><%= setting_select :protocol, [['HTTP', 'http'], ['HTTPS', 'https']] %></p>
+
+    <p><%= setting_select :text_formatting, Redmine::WikiFormatting.formats_for_select, :blank => :label_none %></p>
+
+    <p><%= setting_check_box :cache_formatted_text %></p>
+
+    <p><%= setting_select :wiki_compression, [['Gzip', 'gzip']], :blank => :label_none %></p>
+
+    <p><%= setting_text_field :feeds_limit, :size => 6 %></p>
+
+    <%= call_hook(:view_settings_general_form) %>
+
+
+    <%= submit_tag l(:button_save) %>
+<% end %>
+<hr>
+<p>
+    <%= setting_label :infographics %>
+    <%= form_for WelcomeImage.new, url: {controller: 'welcome_images', action: 'upload'}, :html => {:multipart => true} do |f| %>
+        <%= f.file_field :image, :style => 'display:inline-block'%>
+        <%= label_tag :display_image, l(:label_display_image)%>
+        <%= f.check_box :display_image %>
+        <%= f.submit l(:label_upload) %>
+
+    <% end %>
+
+</p>
+<p>
+    <%= form_for WelcomeImage.new, url: {controller: 'welcome_images', action: 'toggle'}, :html => {:multipart => true} do |f| %>
+        <% if WelcomeImage.last.present? %>
+          <p><%= l(:label_current_image)%><%=  WelcomeImage.last.original_filename%></p>
+            <%= f.submit WelcomeImage.last.display_image ? l(:label_hide) : l(:label_show) %>
+        <% else %>
+            <%= f.submit "", type: 'hidden' %>
+        <% end %>
+    <% end %>
+</p>
+</hr>
